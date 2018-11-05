@@ -1,0 +1,62 @@
+//Definicao dos pinos de entrada
+#define Dip1 5
+#define Dip2 4
+#define Dip3 3
+#define Dip4 2
+
+// Segmentos
+int a = 6;
+int b = 7;
+int c = 8;
+int d = 9;
+int e = 10;
+int f = 11;
+int g = 12;
+
+void setup()
+{
+  //DEFINE OS PINOS DO DIP SWITH E MONITORA O ESTADO DO DIP SWITCH
+  pinMode(Dip1, INPUT_PULLUP);
+  pinMode(Dip2, INPUT_PULLUP);
+  pinMode(Dip3, INPUT_PULLUP);
+  pinMode(Dip4, INPUT_PULLUP);
+  
+  //DEFINE OS PINOS DE SAIDA
+  pinMode(a, OUTPUT);
+  pinMode(b, OUTPUT);
+  pinMode(c, OUTPUT);
+  pinMode(d, OUTPUT);
+  pinMode(e, OUTPUT);
+  pinMode(f, OUTPUT);
+  pinMode(g, OUTPUT);
+}
+
+void loop()
+{
+  //PASSA O VALOR QUE ESTA LENDO NO DIP SWITCH PRAS VARIAVEIS
+  int Dip1Status = digitalRead(Dip1);
+  int Dip2Status = digitalRead(Dip2);
+  int Dip3Status = digitalRead(Dip3);
+  int Dip4Status = digitalRead(Dip4);
+  
+  //PASSA O VALOR DE SAIDA DE CADA EXPRESSÕES PARA AS VARIAVEIS
+  int aEx = ((Dip1Status && (!Dip4Status)) || ((!Dip1Status) && Dip3Status) || (Dip1Status && (!Dip2Status) && (!Dip3Status)) || (Dip1Status && Dip2Status && Dip3Status) || ((!Dip1Status)&& Dip2Status && Dip4Status) || ((!Dip1Status) && (!Dip2Status) && (!Dip4Status)));
+  int bEx = (((!Dip1Status) && (!Dip2Status))|| ((!Dip2Status) && (!Dip3Status))|| ((!Dip1Status) && (!Dip3Status) && (!Dip4Status))|| ((!Dip1Status) && Dip3Status && Dip4Status)|| (Dip1Status && (!Dip3Status) && Dip4Status)|| ((!Dip2Status) && Dip3Status && (!Dip4Status)));
+  int cEx = (((!Dip1Status) && (!Dip3Status))||((!Dip1Status) && Dip2Status)||(Dip1Status && (!Dip2Status))||((!Dip3Status) && Dip4Status)||((!Dip1Status) && Dip4Status));
+  int dEx = ((Dip1Status && (!Dip3Status)) || ((!Dip1Status) && (!Dip2Status) && (!Dip4Status)) || ((!Dip2Status) && Dip3Status && Dip4Status)|| (Dip2Status && Dip3Status && (!Dip4Status))|| (Dip2Status && (!Dip3Status) && Dip4Status));
+  int eEx = ((Dip3Status && (!Dip4Status))||(Dip1Status && Dip2Status)||(Dip1Status && Dip3Status)||(Dip1Status && (!Dip4Status))||((!Dip1Status) && (!Dip2Status) && (!Dip4Status)));
+  int fEx = (((!Dip3Status) && (!Dip4Status))|| ((!Dip1Status) && Dip2Status && (!Dip3Status))|| (Dip2Status && (!Dip4Status))|| (Dip1Status && (!Dip2Status))|| (Dip1Status && Dip3Status));
+  int gEx = ((Dip3Status && (!Dip4Status))||(Dip1Status && (!Dip2Status))||(Dip1Status && Dip4Status)||((!Dip1Status) && Dip2Status && (!Dip3Status))||((!Dip2Status) && Dip3Status));
+  
+  //MOSTRA NO DISPLAY DE 7 SEGMENTOS O VALOR DECODIFICADO
+    digitalWrite(a, !aEx);
+    digitalWrite(b, !bEx);
+    digitalWrite(c, !cEx);
+    digitalWrite(d, !dEx);
+    digitalWrite(e, !eEx);
+    digitalWrite(f, !fEx);
+    digitalWrite(g, !gEx);
+  
+  
+} 
+ 
